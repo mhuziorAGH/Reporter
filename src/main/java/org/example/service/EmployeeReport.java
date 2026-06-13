@@ -20,7 +20,7 @@ public class EmployeeReport {
         for (Task task : arraylist) {
             Employee employee = task.getEmployee();
             Duration time = task.getWorkingTime();
-            if (employee != null) {
+            if (!report.employees.containsKey(employee)) {
                 report.employees.put(employee, time);
             } else {
                 Duration duration = report.employees.get(task.getEmployee());
@@ -31,4 +31,5 @@ public class EmployeeReport {
 
         } return report;
     }
+
 }

@@ -3,15 +3,18 @@ package org.example.service;
 import org.example.domain.Employee;
 import org.example.domain.Project;
 import org.example.domain.Task;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeReportServiceTest {
+public class EmployeeReportTest {
 
-    public void testProperEmployeeReportService() {
+    @Test
+    public void test1EmployeeeReportService() {
         Employee employee = new Employee("Kowalski Jan");
         Project project = new Project("Project1");
         Task task1 = new Task("Task1", LocalDate.of(2026,02,01), Duration.ofHours(1),employee, project);
@@ -20,5 +23,14 @@ public class EmployeeReportServiceTest {
         List<Task> tasks = new ArrayList<>();
         tasks.add(task1);
         tasks.add(task2);
+
+
+        EmployeeReport report = EmployeeReport.generateReport(tasks);
+        Assert.assertTrue(report.employees.containsKey(employee));
+        Assert.assertEquals(Duration.ofHours(3), report.employees.get(employee));
+
     }
+
+
+
 }
