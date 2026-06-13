@@ -71,7 +71,7 @@ class CLITest {
     @Test
     public void testofParamsSetsList() {
         String[] mockArgs = {"--r", "R2;","--help", "--path", "/awda", "--r", "R3;", "--r", "R2;",
-                "--path", "pathtest", --  };
+                "--path", "pathtest"};
 
         CLI cli = new CLI(mockArgs);
     }
