@@ -1,11 +1,16 @@
 package org.example.cli;
 
 public class ParamsSet {
-    private String path = "";
+    // default value
+    private String path = "Resources/reporter-dane";
     private String from = "";
+    //TODO default
     private String to = "";
-    private String whichRaport = "";
+    //TODO default
+    private String whichReport = "";
+    //TODO default
     private String whichOutput = "";
+    //TODO default
 
     public ParamsSet() {
     }
@@ -34,12 +39,12 @@ public class ParamsSet {
         this.to = to;
     }
 
-    public String getWhichRaport() {
-        return whichRaport;
+    public String getWhichReport() {
+        return whichReport;
     }
 
-    public void setWhichRaport(String whichRaport) {
-        this.whichRaport = whichRaport;
+    public void setWhichReport(String whichReport) {
+        this.whichReport = whichReport;
     }
 
     public String getWhichOutput() {

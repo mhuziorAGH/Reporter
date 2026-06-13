@@ -13,19 +13,50 @@ public class CLI {
     }
 
     private List<ParamsSet> getParamsSets(String[] args) {
+        ArrayList<ParamsSet> paramsSets = new ArrayList<>();
+        ParamsSet actualPsSet = new ParamsSet();
+
+        for (int i = 0; i < args.length; i++) {
+            String arg = args[i];
+            String nextArg = args[i + 1];
+            if (arg.startsWith("--") && !nextArg.startsWith("--")) {
+                String mode = arg.startsWith("--") ? arg.substring(2) : arg;
+                switch (mode) {
+                    case "--path" -> {actualPsSet.setPath(nextArg);}
+                    case "--from" -> {actualPsSet.setFrom(nextArg);}
+                    case "--to" -> {actualPsSet.setTo(nextArg);}
+                    case "--r" -> {actualPsSet.setWhichReport(nextArg);}
+                    case "--out" -> {actualPsSet.setWhichOutput(nextArg);}
+                    default ->  {}
+                }
+            }
+            if (arg.endsWith(";")) {}
+        }
+
+
         //TODO
         return new ArrayList<>();
     }
 
     private void selectMethod(ParamsSet params) {
-        String method = params.getWhichRaport();
+        String method = params.getWhichReport();
 
         switch (method) {
-            case "R1" -> {}
-            case "R2" -> {}
-            case "R3" -> {}
-            case "R4" -> {}
-            default -> {}
+            case "R1" -> {
+                //TODO  (prams)
+            }
+            case "R2" -> {
+                //TODO  (prams)
+            }
+            case "R3" -> {
+                //TODO  (prams)
+            }
+            case "R4" -> {
+                //TODO  (prams)
+            }
+            default -> {
+                //TODO  (prams)
+            }
         }
 
     }
