@@ -22,7 +22,7 @@ public class Task {
         return startDate;
     }
 
-    public double getWorkingTime() {
+    public Duration getWorkingTime() {
         return workingTime;
     }
 }
