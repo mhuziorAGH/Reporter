@@ -1,5 +1,9 @@
 package org.example.cli;
 
+import org.example.output.EmployeeReportPrinter;
+import org.example.output.ProjectReportPrinter;
+import org.example.service.EmployeeReport;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +39,8 @@ public class CLI {
                     case "to" -> actualPsSet.setTo(value);
                     case "r" -> actualPsSet.setWhichReport(value);
                     case "out" -> actualPsSet.setWhichOutput(value);
-                    default -> System.out.println("Nieznany parametr: " + arg);
+                    default -> {
+                    }
                 }
 
                 if (nextArg.endsWith(";")) {
@@ -45,7 +50,10 @@ public class CLI {
             }
         }
 
-        if (!actualPsSet.getWhichReport().isEmpty()) {
+        if (args.length == 0) {
+            paramsSets.add(actualPsSet);
+        } else if (!args[args.length - 1].endsWith(";")
+                && !actualPsSet.getWhichReport().isEmpty()) {
             paramsSets.add(actualPsSet);
         }
 
@@ -75,5 +83,9 @@ public class CLI {
 
         }
 
+    }
+
+    public List<ParamsSet> getParamsSets() {
+        return paramsSets;
     }
 }
