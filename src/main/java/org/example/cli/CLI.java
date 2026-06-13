@@ -30,22 +30,23 @@ public class CLI {
                 System.out.println(nextArg);
 
                 if (arg.startsWith("--") && !nextArg.startsWith("--")) {
+                    System.out.println("true");
                     String mode = arg.startsWith("--") ? arg.substring(2) : arg;
                     switch (mode) {
-                        case "--path" -> {
+                        case "path" -> {
                             actualPsSet.setPath(nextArg);
                         }
-                        case "--from" -> {
+                        case "from" -> {
                             actualPsSet.setFrom(nextArg);
                         }
-                        case "--to" -> {
+                        case "to" -> {
                             actualPsSet.setTo(nextArg);
                         }
-                        case "--r" -> {
+                        case "r" -> {
                             actualPsSet.setWhichReport(nextArg);
                             System.out.println("is");
                         }
-                        case "--out" -> {
+                        case "out" -> {
                             actualPsSet.setWhichOutput(nextArg);
                         }
                         default -> {
