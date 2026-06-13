@@ -32,10 +32,7 @@ public class EmployeeReport {
 
     public static EmployeeReport generateReport(List<Task> arraylist) {
 
-        FileScanner fileScanner = new FileScanner();
-
         EmployeeReport report = new EmployeeReport();
-
 
         for (Task task : arraylist) {
             Employee employee = task.getEmployee();

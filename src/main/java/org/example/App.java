@@ -5,6 +5,7 @@ import org.example.data.FileScanner;
 import org.example.domain.Employee;
 import org.example.domain.Project;
 import org.example.domain.Task;
+import org.example.service.EmployeeReport;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -29,7 +30,11 @@ public class App {
 
             List<Task> test = new ArrayList<>();
             test.add(test2);
+
+            EmployeeReport  employeeReport = new EmployeeReport();
+            employeeReport.generateReport(test);
         }
+
 
 
     }
