@@ -30,33 +30,37 @@ public class CLI {
                     default ->  {}
                 }
             }
-            if (arg.endsWith(";")) {}
+            if (arg.endsWith(";")) {
+                paramsSets.add(actualPsSet);
+                actualPsSet.clear();
+            }
         }
 
-
-        //TODO
-        return new ArrayList<>();
+        return paramsSets;
     }
 
     private void selectMethod(ParamsSet params) {
         String method = params.getWhichReport();
 
-        switch (method) {
-            case "R1" -> {
-                //TODO  (prams)
+        for (ParamsSet paramsSet : paramsSets) {
+            switch (paramsSet.getWhichReport()) {
+                case "R1" -> {
+                    //TODO  (prams)
+                }
+                case "R2" -> {
+                    //TODO  (prams)
+                }
+                case "R3" -> {
+                    //TODO  (prams)
+                }
+                case "R4" -> {
+                    //TODO  (prams)
+                }
+                default -> {
+                    //TODO  (prams)
+                }
             }
-            case "R2" -> {
-                //TODO  (prams)
-            }
-            case "R3" -> {
-                //TODO  (prams)
-            }
-            case "R4" -> {
-                //TODO  (prams)
-            }
-            default -> {
-                //TODO  (prams)
-            }
+
         }
 
     }
