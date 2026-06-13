@@ -35,7 +35,8 @@ public class CLI {
                     case "to" -> actualPsSet.setTo(value);
                     case "r" -> actualPsSet.setWhichReport(value);
                     case "out" -> actualPsSet.setWhichOutput(value);
-                    default -> {}
+                    default -> {
+                    }
                 }
 
                 if (nextArg.endsWith(";")) {
@@ -45,9 +46,10 @@ public class CLI {
             }
         }
 
-        if (args.length > 0
-                && !args[args.length - 1].endsWith(";")
-                && !actualPsSet.getWhichReport().isBlank()) {
+        if (args.length == 0) {
+            paramsSets.add(actualPsSet);
+        } else if (!args[args.length - 1].endsWith(";")
+                && !actualPsSet.getWhichReport().isEmpty()) {
             paramsSets.add(actualPsSet);
         }
 
