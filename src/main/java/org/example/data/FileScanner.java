@@ -1,4 +1,7 @@
 package org.example.data;
+import org.example.domain.Employee;
+import org.example.domain.Project;
+import org.example.domain.Task;
 
 import org.apache.poi.ss.usermodel.*;
 
@@ -9,17 +12,20 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.Duration;
 
 public class FileScanner {
 
-    public List<List<Object>> readExcelFile(String filePath) {
+    public List<Task> readExcelFile(String filePath) {
 
-        List<List<Object>> result = new ArrayList<>();
+        List<Task> result = new ArrayList<>();
 
         File file = new File(filePath);
-        String fileName = file.getName()
+        String str_employee = file.getName()
                 .replaceFirst("[.][^.]+$", "")
                 .replace("_", " ");
+
+        Employee employee = new Employee(str_employee);
 
         try (FileInputStream fis = new FileInputStream(file);
              Workbook workbook = WorkbookFactory.create(fis)) {
@@ -27,6 +33,8 @@ public class FileScanner {
             for (int sheetIndex = 0; sheetIndex < workbook.getNumberOfSheets(); sheetIndex++) {
 
                 Sheet sheet = workbook.getSheetAt(sheetIndex);
+
+                Project project = new Project(sheet.getSheetName());
 
                 for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
 
@@ -37,16 +45,14 @@ public class FileScanner {
                     Cell timeCell = row.getCell(2);
 
                     LocalDate date = convertDate(dataCell);
-                    String task = taskCell.getStringCellValue();
-                    Double time = timeCell.getNumericCellValue();
+                    String description = taskCell.getStringCellValue();
 
-                    List<Object> record = new ArrayList<>();
+                    double hours = timeCell.getNumericCellValue();
+                    Duration time = Duration.ofMinutes(Math.round(hours * 60));
 
-                    record.add(fileName);
-                    record.add(date);
-                    record.add(task);
-                    record.add(time);
-                    result.add(record);
+                    Task task = new Task(description, date, time, employee, project);
+
+                    result.add(task);
                 }
             }
 
