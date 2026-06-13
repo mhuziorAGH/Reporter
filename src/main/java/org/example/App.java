@@ -24,7 +24,7 @@ public class App {
             Employee test1 = new Employee(employee);
             LocalDate date = (LocalDate) o.get(1);
             String task = (String) o.get(2);
-            Double time = (Double) o.get(3);
+            Duration time = (Duration) o.get(3);
             Project project = new Project("Project 1");
             Task test2 = new Task(task, date, time, test1, project);
 
