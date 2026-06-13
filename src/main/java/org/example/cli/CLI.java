@@ -24,7 +24,11 @@ public class CLI {
             //TODO --help
             for (int i = 0; i < args.length - 1; i++) {
                 String arg = args[i];
+                System.out.println(arg);
+
                 String nextArg = args[i + 1];
+                System.out.println(nextArg);
+
                 if (arg.startsWith("--") && !nextArg.startsWith("--")) {
                     String mode = arg.startsWith("--") ? arg.substring(2) : arg;
                     switch (mode) {
