@@ -97,9 +97,9 @@ class CLITest {
         String actualOutput = outContent.toString().trim();
         String expectedOutput = String.join(
                 System.lineSeparator(),
-                "ParamsSet{path='Resources/reporter-dane', from='2010-01-01', to='2027-06-13', whichReport='R2', whichOutput=''}",
-                "ParamsSet{path='/awda', from='2010-01-01', to='2027-06-13', whichReport='R3', whichOutput=''}",
-                "ParamsSet{path='Resources/reporter-dane', from='2010-01-01', to='2027-06-13', whichReport='R2', whichOutput=''}",
+                "ParamsSet{path='Resources/reporter-dane/2012/01/Kowalski_Jan.xls', from='2010-01-01', to='2027-06-13', whichReport='R2', whichOutput='out1'}",
+                "ParamsSet{path='/awda', from='2010-01-01', to='2027-06-13', whichReport='R3', whichOutput='out1'}",
+                "ParamsSet{path='Resources/reporter-dane/2012/01/Kowalski_Jan.xls', from='2010-01-01', to='2027-06-13', whichReport='R2', whichOutput='out1'}",
                 "ParamsSet{path='pathtest', from='testFrom', to='testTo', whichReport='R1', whichOutput='testOut'}"
         );
 
