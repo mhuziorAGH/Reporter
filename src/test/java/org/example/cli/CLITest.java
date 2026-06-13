@@ -1,80 +1,78 @@
 package org.example.cli;
 
-import org.junit.Assert;
-import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CLITest {
+class CLITest {
 
-    // Tworzymy bufor, który przechwyci tekst z konsoli
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
+    private ByteArrayOutputStream outContent;
+    private PrintStream originalOut;
 
     @BeforeEach
     void setUp() {
-        // Przekierowujemy System.out do naszego bufora przed każdym testem
+        originalOut = System.out;
+        outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
     }
 
     @AfterEach
     void tearDown() {
-        // Przywracamy oryginalny terminal po każdym teście
         System.setOut(originalOut);
     }
 
-//    @Test
-//    void powinienWypisacPoprawnyKomunikat() {
-//        // Arrange
-//        String[] mockArgs = {"pomoc"};
-//        MojaAplikacja app = new MojaAplikacja();
-//
-//        // Act - wywołujemy metodę void, która robi System.out.println()
-//        app.przetwórzArgumenty(mockArgs);
-//
-//        // Assert - sprawdzamy zawartość konsoli (metoda .trim() usuwa znaki nowej linii)
-//        String oczekiwanyTekst = "Uruchomiono tryb pomocy.";
-//        String aktualnyTekst = outContent.toString().trim();
-//
-//        assertEquals(oczekiwanyTekst, aktualnyTekst, "Tekst wypisany w terminalu jest niepoprawny!");
-//    }
-
     @Test
-    public void testWithoutParams() {
-        String [] mockArgs = {""};
+    void testWithOneParam() {
+        String[] mockArgs = {"--r", "R2"};
+
         CLI cli = new CLI(mockArgs);
         cli.run();
-        String wantedOutput = "ReportEmployeesCommand";
+
         String actualOutput = outContent.toString().trim();
 
-    assertEquals(wantedOutput, actualOutput);
-
-
-
-
-
+        assertEquals("ReportProjectsCommand", actualOutput);
     }
 
     @Test
-    public void testWithOneSetofParams() {
-        String [] mockArgs = {"--path", "asdasda"};
-        CLI cli2 = new CLI(mockArgs);
+    void testWithOneSetOfParams() {
+        String[] mockArgs2 = {"--help", "--path", "/awda", "--r", "R3"};
+        CLI cli2 = new CLI(mockArgs2);
         cli2.run();
-        String wantedOutput = "ReportEmployeesCommand";
-        String actualOutput = outContent.toString().trim();
 
-//        assertEquals(wantedOutput, actualOutput);
+        String actualOutput2 = outContent.toString().trim();
+        assertEquals("ReportEmployeeProjectsCommand", actualOutput2);
 
     }
 
     @Test
-    public void testWithMoreSetsofParams() {
+    void testWithFewSetsOfParams() {
+        String[] mockArgs = {"--r", "R2;","--help", "--path", "/awda", "--r", "R3;", "--r", "R2;" };
 
+        CLI cli = new CLI(mockArgs);
+        cli.run();
+
+        String actualOutput = outContent.toString().trim();
+
+        String expectedOutput = String.join(
+                System.lineSeparator(),
+                "ReportProjectsCommand",
+                "ReportEmployeeProjectsCommand",
+                "ReportProjectsCommand"
+        );
+
+        assertEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    public void testofParamsSetsList() {
+        String[] mockArgs = {"--r", "R2;","--help", "--path", "/awda", "--r", "R3;", "--r", "R2;",
+                "--path", "pathtest", --  };
+
+        CLI cli = new CLI(mockArgs);
     }
 }

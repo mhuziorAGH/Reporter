@@ -9,8 +9,7 @@ public class ParamsSet {
     //yyyy-MM-dd
     private String from = "2010-01-01";
     private String to;
-    private String whichReport = "";
-    //TODO default
+    private String whichReport = "R1";
     private String whichOutput = "";
     //TODO default
 
