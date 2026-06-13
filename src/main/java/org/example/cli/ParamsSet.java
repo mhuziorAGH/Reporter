@@ -10,8 +10,7 @@ public class ParamsSet {
     private String from = "2010-01-01";
     private String to;
     private String whichReport = "R1";
-    private String whichOutput = "";
-    //TODO default
+    private String whichOutput = "out1";
 
     public ParamsSet() {
         this.to = nextyearDate();
