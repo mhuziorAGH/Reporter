@@ -4,7 +4,9 @@ import org.example.domain.Employee;
 import org.example.domain.Project;
 import org.example.domain.Task;
 import org.example.output.EmployeeReportPrinter;
+import org.example.output.ProjectReportPrinter;
 import org.example.service.EmployeeReport;
+import org.example.service.ProjectReport;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -26,5 +28,8 @@ public class App {
 
         EmployeeReport report = EmployeeReport.generateReport(tasks);
         EmployeeReportPrinter.printReport(report);
+
+        ProjectReport projectReport = ProjectReport.generateReport(tasks);
+        ProjectReportPrinter.printReport(projectReport);
     }
 }
