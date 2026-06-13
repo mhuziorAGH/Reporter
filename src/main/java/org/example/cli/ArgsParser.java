@@ -1,4 +1,4 @@
 package org.example.cli;
 
-public class cli {
+public class ArgsParser {
 }
