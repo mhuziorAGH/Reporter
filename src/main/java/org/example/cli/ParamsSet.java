@@ -5,7 +5,10 @@ import java.time.format.DateTimeFormatter;
 
 public class ParamsSet {
     // default values
-    private String path = "Resources/reporter-dane";
+//    private String path = "Resources/reporter-dane";
+    //default value for single file
+//    private String path = "Resources/reporter-dane/2012/01/Kowalski_Jan.xls";
+    private String path = "Resources/reporter-dane/2012/01/Kowalski_Jan.xls";
     //yyyy-MM-dd
     private String from = "2010-01-01";
     private String to;

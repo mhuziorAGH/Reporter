@@ -1,5 +1,9 @@
 package org.example.cli;
 
+import org.example.output.EmployeeReportPrinter;
+import org.example.output.ProjectReportPrinter;
+import org.example.service.EmployeeReport;
+
 import java.util.ArrayList;
 import java.util.List;
 
