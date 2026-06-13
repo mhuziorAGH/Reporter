@@ -4,6 +4,7 @@ import org.example.domain.Employee;
 import org.example.domain.Task;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,11 +13,13 @@ public class EmployeeReport {
 
     public Map<Employee, Duration> employees = new HashMap<>();
 
-    public static EmployeeReport generateReport(List<Task> tasks) {
+    public static EmployeeReport generateReport(List<Task> tasks, LocalDate from, LocalDate to) {
 //flow -> data(lista) -> trafia do cli (reportgin command) -> lista przesynaa jest do mnie jako argument
+
         EmployeeReport report = new EmployeeReport();
 
         for (Task task : tasks) {
+            LocalDate date = task.getStartDate();
             Employee employee = task.getEmployee();
             Duration time = task.getWorkingTime();
 
