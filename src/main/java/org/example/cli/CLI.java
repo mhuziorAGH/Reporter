@@ -10,57 +10,45 @@ public class CLI {
         this.paramsSets = getParamsSets(args);
     }
 
-    public void run(String[] args) {
-        paramsSets = getParamsSets(args);
+    public void run() {
         selectMethod();
     }
 
     private List<ParamsSet> getParamsSets(String[] args) {
-        ArrayList<ParamsSet> paramsSets = new ArrayList<>();
+        List<ParamsSet> paramsSets = new ArrayList<>();
         ParamsSet actualPsSet = new ParamsSet();
 
-        if (args.length > 1) {
+        for (int i = 0; i < args.length - 1; i++) {
+            String arg = args[i];
+            String nextArg = args[i + 1];
 
-            //TODO --help
-            for (int i = 0; i < args.length - 1; i++) {
-                String arg = args[i];
-                System.out.println(arg);
+            if (arg.startsWith("--") && !nextArg.startsWith("--")) {
+                String mode = arg.substring(2);
 
-                String nextArg = args[i + 1];
-                System.out.println(nextArg);
+                String value = nextArg.endsWith(";")
+                        ? nextArg.substring(0, nextArg.length() - 1)
+                        : nextArg;
 
-                if (arg.startsWith("--") && !nextArg.startsWith("--")) {
-                    System.out.println("true");
-                    String mode = arg.startsWith("--") ? arg.substring(2) : arg;
-                    switch (mode) {
-                        case "path" -> {
-                            actualPsSet.setPath(nextArg);
-                        }
-                        case "from" -> {
-                            actualPsSet.setFrom(nextArg);
-                        }
-                        case "to" -> {
-                            actualPsSet.setTo(nextArg);
-                        }
-                        case "r" -> {
-                            actualPsSet.setWhichReport(nextArg);
-                            System.out.println("is");
-                        }
-                        case "out" -> {
-                            actualPsSet.setWhichOutput(nextArg);
-                        }
-                        default -> {
-                        }
-                    }
+                switch (mode) {
+                    case "path" -> actualPsSet.setPath(value);
+                    case "from" -> actualPsSet.setFrom(value);
+                    case "to" -> actualPsSet.setTo(value);
+                    case "r" -> actualPsSet.setWhichReport(value);
+                    case "out" -> actualPsSet.setWhichOutput(value);
+                    default -> System.out.println("Nieznany parametr: " + arg);
                 }
-                if (arg.endsWith(";")) {
+
+                if (nextArg.endsWith(";")) {
                     paramsSets.add(actualPsSet);
-                    actualPsSet.clear();
+                    actualPsSet = new ParamsSet();
                 }
             }
-        } else {
+        }
+
+        if (!actualPsSet.getWhichReport().isEmpty()) {
             paramsSets.add(actualPsSet);
         }
+
         return paramsSets;
     }
 
@@ -73,7 +61,6 @@ public class CLI {
                 }
                 case "R2" -> {
                     ReportProjectsCommand.execute(paramsSet);
-                    System.out.println("isSelected");
                 }
                 case "R3" -> {
                     ReportEmployeeProjectsCommand.execute(paramsSet);

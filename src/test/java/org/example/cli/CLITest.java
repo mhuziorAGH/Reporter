@@ -49,7 +49,7 @@ public class CLITest {
     public void testWithoutParams() {
         String [] mockArgs = {""};
         CLI cli = new CLI(mockArgs);
-        cli.run(mockArgs);
+        cli.run();
         String wantedOutput = "ReportEmployeesCommand";
         String actualOutput = outContent.toString().trim();
 
@@ -65,7 +65,7 @@ public class CLITest {
     public void testWithOneSetofParams() {
         String [] mockArgs = {"--path", "asdasda"};
         CLI cli2 = new CLI(mockArgs);
-        cli2.run(mockArgs);
+        cli2.run();
         String wantedOutput = "ReportEmployeesCommand";
         String actualOutput = outContent.toString().trim();
 

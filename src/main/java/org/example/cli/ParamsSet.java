@@ -5,44 +5,23 @@ import java.time.format.DateTimeFormatter;
 
 public class ParamsSet {
     // default values
-    private String defaultPath = "Resources/reporter-dane";
+    private String path = "Resources/reporter-dane";
     //yyyy-MM-dd
-    private String defaultFrom = "2010-01-01";
-    private String defaultTo;
-    private String defaultReport = "";
-    //TODO default
-    private String defaultOutput = "";
-    //TODO default
-
-    // working values
-    private String path;
-    private String from;
+    private String from = "2010-01-01";
     private String to;
-    private String whichReport;
-    private String whichOutput;
-
+    private String whichReport = "";
+    //TODO default
+    private String whichOutput = "";
+    //TODO default
 
     public ParamsSet() {
-        this.path = defaultPath;
-        this.defaultTo = nextyearDate();
-        this.from = defaultFrom;
-        this.to = defaultTo;
-        this.whichReport = defaultReport;
-        this.whichOutput = defaultOutput;
+        this.to = nextyearDate();
     }
 
     public String nextyearDate() {
         LocalDate jutro = LocalDate.now().plusDays(365);
         DateTimeFormatter formater = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return jutro.format(formater);
-    }
-
-    public void clear() {
-        path=defaultPath;
-        from=defaultFrom;
-        to=defaultTo;
-        whichReport=defaultReport;
-        whichOutput=defaultOutput;
     }
 
     public String getPath() {

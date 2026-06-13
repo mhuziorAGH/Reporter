@@ -4,12 +4,13 @@ import org.example.cli.CLI;
 
 public class App {
     public static void main(String[] args) {
-//        CLI cli = new CLI(args);
-//        cli.run(args);
+        CLI cli = new CLI(args);
+        cli.run();
 
-        String [] mockArgs = new String[] {"--r", "R2"};
+        //testing with params
+        String [] mockArgs = new String[] {"--r", "R3"};
         CLI cli2 = new CLI(mockArgs);
-        cli2.run(mockArgs);
+        cli2.run();
 
     }
 }
