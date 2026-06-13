@@ -29,7 +29,14 @@ class CLITest {
 
     @Test
     void testWithoutParams() {
+        String[] mockArgs = {"--r", "R2"};
 
+        CLI cli = new CLI(mockArgs);
+        cli.run();
+
+        String actualOutput = outContent.toString().trim();
+
+        assertEquals("ReportProjectsCommand", actualOutput);
     }
 
     @Test
@@ -88,8 +95,15 @@ class CLITest {
         }
 
         String actualOutput = outContent.toString().trim();
+        String expectedOutput = String.join(
+                System.lineSeparator(),
+                "ParamsSet{path='Resources/reporter-dane', from='2010-01-01', to='2027-06-13', whichReport='R2', whichOutput=''}",
+                "ParamsSet{path='/awda', from='2010-01-01', to='2027-06-13', whichReport='R3', whichOutput=''}",
+                "ParamsSet{path='Resources/reporter-dane', from='2010-01-01', to='2027-06-13', whichReport='R2', whichOutput=''}",
+                "ParamsSet{path='pathtest', from='testFrom', to='testTo', whichReport='R1', whichOutput='testOut'}"
+        );
 
-        assertEquals("", actualOutput);
+        assertEquals(expectedOutput, actualOutput);
 
 
     }
