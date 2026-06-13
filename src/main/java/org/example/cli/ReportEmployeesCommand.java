@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ReportEmployeesCommand {
     public static void execute(ParamsSet params) {
-        System.out.println("ReportEmployeesCommand");
+//        System.out.println("ReportEmployeesCommand");
 
         //TODO after changes in other packages
 
