@@ -7,8 +7,8 @@ public class Project {
     private String projectName;
     private List<Employee> employee = new ArrayList<>();
 
-    public Project(String desctiption) {
-        this.projectName = desctiption;
+    public Project(String projectName) {
+        this.projectName = projectName;
     }
 
     public String getProjectName() {
