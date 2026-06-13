@@ -62,4 +62,15 @@ public class ParamsSet {
     public void setWhichOutput(String whichOutput) {
         this.whichOutput = whichOutput;
     }
+
+    @Override
+    public String toString() {
+        return "ParamsSet{" +
+                "path='" + path + '\'' +
+                ", from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", whichReport='" + whichReport + '\'' +
+                ", whichOutput='" + whichOutput + '\'' +
+                '}';
+    }
 }

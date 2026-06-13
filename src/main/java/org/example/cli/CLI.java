@@ -35,7 +35,7 @@ public class CLI {
                     case "to" -> actualPsSet.setTo(value);
                     case "r" -> actualPsSet.setWhichReport(value);
                     case "out" -> actualPsSet.setWhichOutput(value);
-                    default -> System.out.println("Nieznany parametr: " + arg);
+                    default -> {}
                 }
 
                 if (nextArg.endsWith(";")) {
@@ -45,7 +45,9 @@ public class CLI {
             }
         }
 
-        if (!actualPsSet.getWhichReport().isEmpty()) {
+        if (args.length > 0
+                && !args[args.length - 1].endsWith(";")
+                && !actualPsSet.getWhichReport().isBlank()) {
             paramsSets.add(actualPsSet);
         }
 
@@ -75,5 +77,9 @@ public class CLI {
 
         }
 
+    }
+
+    public List<ParamsSet> getParamsSets() {
+        return paramsSets;
     }
 }

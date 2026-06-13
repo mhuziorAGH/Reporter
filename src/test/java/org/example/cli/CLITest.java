@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -24,6 +25,11 @@ class CLITest {
     @AfterEach
     void tearDown() {
         System.setOut(originalOut);
+    }
+
+    @Test
+    void testWithoutParams() {
+
     }
 
     @Test
@@ -71,8 +77,22 @@ class CLITest {
     @Test
     public void testofParamsSetsList() {
         String[] mockArgs = {"--r", "R2;","--help", "--path", "/awda", "--r", "R3;", "--r", "R2;",
-                "--path", "pathtest"};
+                "--path", "pathtest", "--from", "testFrom", "--to", "testTo", "--r", "R1", "--out", "testOut"};
 
         CLI cli = new CLI(mockArgs);
+
+        List<ParamsSet> paramsSets = cli.getParamsSets();
+
+        for (ParamsSet paramsSet : paramsSets) {
+            System.out.println(paramsSet.toString());
+        }
+
+        String actualOutput = outContent.toString().trim();
+
+        assertEquals("", actualOutput);
+
+
     }
+
+    //TODO more tests
 }
