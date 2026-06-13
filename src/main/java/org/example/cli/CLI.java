@@ -4,60 +4,80 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CLI {
-    private final String[] args;
     private List<ParamsSet> paramsSets = new ArrayList<>();
 
     public CLI(String[] args) {
-        this.args = args;
         this.paramsSets = getParamsSets(args);
+    }
+
+    public void run(String[] args) {
+        paramsSets = getParamsSets(args);
+        selectMethod();
     }
 
     private List<ParamsSet> getParamsSets(String[] args) {
         ArrayList<ParamsSet> paramsSets = new ArrayList<>();
         ParamsSet actualPsSet = new ParamsSet();
 
-        for (int i = 0; i < args.length; i++) {
-            String arg = args[i];
-            String nextArg = args[i + 1];
-            if (arg.startsWith("--") && !nextArg.startsWith("--")) {
-                String mode = arg.startsWith("--") ? arg.substring(2) : arg;
-                switch (mode) {
-                    case "--path" -> {actualPsSet.setPath(nextArg);}
-                    case "--from" -> {actualPsSet.setFrom(nextArg);}
-                    case "--to" -> {actualPsSet.setTo(nextArg);}
-                    case "--r" -> {actualPsSet.setWhichReport(nextArg);}
-                    case "--out" -> {actualPsSet.setWhichOutput(nextArg);}
-                    default ->  {}
+        if (args.length > 1) {
+
+            //TODO --help
+            for (int i = 0; i < args.length - 1; i++) {
+                String arg = args[i];
+                String nextArg = args[i + 1];
+                if (arg.startsWith("--") && !nextArg.startsWith("--")) {
+                    String mode = arg.startsWith("--") ? arg.substring(2) : arg;
+                    switch (mode) {
+                        case "--path" -> {
+                            actualPsSet.setPath(nextArg);
+                        }
+                        case "--from" -> {
+                            actualPsSet.setFrom(nextArg);
+                        }
+                        case "--to" -> {
+                            actualPsSet.setTo(nextArg);
+                        }
+                        case "--r" -> {
+                            actualPsSet.setWhichReport(nextArg);
+                            System.out.println("is");
+                        }
+                        case "--out" -> {
+                            actualPsSet.setWhichOutput(nextArg);
+                        }
+                        default -> {
+                        }
+                    }
+                }
+                if (arg.endsWith(";")) {
+                    paramsSets.add(actualPsSet);
+                    actualPsSet.clear();
                 }
             }
-            if (arg.endsWith(";")) {
-                paramsSets.add(actualPsSet);
-                actualPsSet.clear();
-            }
+        } else {
+            paramsSets.add(actualPsSet);
         }
-
         return paramsSets;
     }
 
-    private void selectMethod(ParamsSet params) {
-        String method = params.getWhichReport();
 
+    private void selectMethod() {
         for (ParamsSet paramsSet : paramsSets) {
             switch (paramsSet.getWhichReport()) {
                 case "R1" -> {
-                    //TODO  (prams)
+                    ReportEmployeesCommand.execute(paramsSet);
                 }
                 case "R2" -> {
-                    //TODO  (prams)
+                    ReportProjectsCommand.execute(paramsSet);
+                    System.out.println("isSelected");
                 }
                 case "R3" -> {
-                    //TODO  (prams)
+                    ReportEmployeeProjectsCommand.execute(paramsSet);
                 }
                 case "R4" -> {
-                    //TODO  (prams)
+                    ReportTaskRankingCommand.execute(paramsSet);
                 }
                 default -> {
-                    //TODO  (prams)
+                    ReportEmployeesCommand.execute(paramsSet);
                 }
             }
 
