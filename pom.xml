@@ -23,7 +23,7 @@
             <scope>test</scope>
         </dependency>
 
-
+        <!-- Supports both legacy .xls and OOXML .xlsx workbooks. -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
@@ -59,7 +59,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.przyklad.Main</mainClass>
+                            <mainClass>org.example.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
