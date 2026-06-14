@@ -43,16 +43,24 @@ public class EmployeeReportPrinter {
 
             // nagłówek: pracownik + suma godzin
             String marker = employee.equals(topEmployee) ? "  ⭐ Tytan pracy" : "";
-            System.out.println(employeeName + " (" + (totalMinutes / 60) + "h):" + marker);
+            Duration total = Duration.ZERO;
+            for (Duration duration : projects.values()) {
+                total = total.plus(duration);
+            }
+            System.out.println(employeeName + " (" + total.toHours() + "h " + total.toMinutesPart() + "m):" + marker);
 
             //  projekt z godzinami i procentem
             for (Map.Entry<Project, Duration> projEntry : projects.entrySet()) {
                 String projectName = projEntry.getKey().getProjectName();
-                long projectMinutes = projEntry.getValue().toMinutes();
-                long hours = projectMinutes / 60;
-                double percent = (projectMinutes * 100.0) / totalMinutes;
+                Duration projDuration = projEntry.getValue();
 
-                System.out.printf("  %s: %dh (%.1f%%)%n", projectName, hours, percent);
+                double percent = (projDuration.toMinutes() * 100.0) / total.toMinutes();
+
+                System.out.printf("  %s: %dh %dm (%.1f%%)%n",
+                        projectName,
+                        projDuration.toHours(),
+                        projDuration.toMinutesPart(),
+                        percent);
             }
         }
     }
