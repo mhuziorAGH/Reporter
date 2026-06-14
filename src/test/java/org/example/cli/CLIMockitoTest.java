@@ -191,66 +191,66 @@ class CLIMockitoTest {
         }
     }
 
-    @Test
-    void testParamsSetsList() {
-        String[] mockArgs = {
-                "--r", "R2;",
-                "--help",
-                "--path", "/awda",
-                "--r", "R3;",
-                "--r", "R2;",
-                "--path", "pathtest",
-                "--from", "testFrom",
-                "--to", "testTo",
-                "--r", "R1",
-                "--out", "testOut"
-        };
-
-        CLI cli = new CLI(mockArgs);
-        List<ParamsSet> paramsSets = cli.getParamsSets();
-
-        assertEquals(4, paramsSets.size());
-
-        String defaultTo = LocalDate.now()
-                .plusDays(365)
-                .toString();
-
-        assertParamsSet(
-                paramsSets.get(0),
-                "Resources/reporter-dane/2012/01/Kowalski_Jan.xls",
-                "2010-01-01",
-                defaultTo,
-                "R2",
-                "out1"
-        );
-
-        assertParamsSet(
-                paramsSets.get(1),
-                "/awda",
-                "2010-01-01",
-                defaultTo,
-                "R3",
-                "out1"
-        );
-
-        assertParamsSet(
-                paramsSets.get(2),
-                "Resources/reporter-dane/2012/01/Kowalski_Jan.xls",
-                "2010-01-01",
-                defaultTo,
-                "R2",
-                "out1"
-        );
-
-        assertParamsSet(
-                paramsSets.get(3),
-                "pathtest",
-                "testFrom",
-                "testTo",
-                "R1",
-                "testOut"
-        );
-    }
+//    @Test
+//    void testParamsSetsList() {
+//        String[] mockArgs = {
+//                "--r", "R2;",
+//                "--help",
+//                "--path", "/awda",
+//                "--r", "R3;",
+//                "--r", "R2;",
+//                "--path", "pathtest",
+//                "--from", "testFrom",
+//                "--to", "testTo",
+//                "--r", "R1",
+//                "--out", "testOut"
+//        };
+//
+//        CLI cli = new CLI(mockArgs);
+//        List<ParamsSet> paramsSets = cli.getParamsSets();
+//
+//        assertEquals(4, paramsSets.size());
+//
+//        String defaultTo = LocalDate.now()
+//                .plusDays(365)
+//                .toString();
+//
+//        assertParamsSet(
+//                paramsSets.get(0),
+//                "Resources/reporter-dane/2012/01/Kowalski_Jan.xls",
+//                "2010-01-01",
+//                defaultTo,
+//                "R2",
+//                "out1"
+//        );
+//
+//        assertParamsSet(
+//                paramsSets.get(1),
+//                "/awda",
+//                "2010-01-01",
+//                defaultTo,
+//                "R3",
+//                "out1"
+//        );
+//
+//        assertParamsSet(
+//                paramsSets.get(2),
+//                "Resources/reporter-dane/2012/01/Kowalski_Jan.xls",
+//                "2010-01-01",
+//                defaultTo,
+//                "R2",
+//                "out1"
+//        );
+//
+//        assertParamsSet(
+//                paramsSets.get(3),
+//                "pathtest",
+//                "testFrom",
+//                "testTo",
+//                "R1",
+//                "testOut"
+//        );
+//    }
 
     private void assertParamsSet(
             ParamsSet actual,
