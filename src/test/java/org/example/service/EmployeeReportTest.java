@@ -55,15 +55,15 @@ public class EmployeeReportTest {
         Project project = new Project("Project1");
 
         List<Task> tasks = new ArrayList<>();
-        tasks.add(new Task("Task1", LocalDate.of(2026, 2, 1), Duration.ofHours(2), kowalski, project));
+        tasks.add(new Task("Task1", LocalDate.of(2026, 2, 1), Duration.ofHours(2).plus(Duration.ofMinutes(30)), kowalski, project));
         tasks.add(new Task("Task2", LocalDate.of(2026, 2, 2), Duration.ofHours(3), kowalski, project));
-        tasks.add(new Task("Task3", LocalDate.of(2026, 2, 1), Duration.ofHours(5), nowak, project));
+        tasks.add(new Task("Task3", LocalDate.of(2026, 2, 1), Duration.ofHours(5).plus(Duration.ofMinutes(30)), nowak, project));
         tasks.add(new Task("Task4", LocalDate.of(2026, 2, 3), Duration.ofHours(1), nowak, project));
 
         EmployeeReport report = EmployeeReport.generateReport(tasks);
 
-        Assert.assertEquals(Duration.ofHours(5), report.employeeProjectHours.get(kowalski).get(project));
-        Assert.assertEquals(Duration.ofHours(6), report.employeeProjectHours.get(nowak).get(project));
+        Assert.assertEquals(Duration.ofMinutes(330), report.employeeProjectHours.get(kowalski).get(project));
+        Assert.assertEquals(Duration.ofMinutes(390), report.employeeProjectHours.get(nowak).get(project));
     }
 
     // pusta lista → pusty raport

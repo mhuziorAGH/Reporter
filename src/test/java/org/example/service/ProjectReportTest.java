@@ -105,4 +105,56 @@ public class ProjectReportTest {
 
         Assert.assertEquals(2, report.projects.size());
     }
+
+    // daty: jedno zadanie → start = koniec = ta sama data
+    @Test
+    public void testDatesSingleTask() {
+        Employee employee = new Employee("Kowalski Jan");
+        Project project = new Project("Projekt1");
+
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(new Task("Task1", LocalDate.of(2026, 3, 15), Duration.ofHours(8), employee, project));
+
+        ProjectReport report = ProjectReport.generateReport(tasks);
+
+        Assert.assertEquals(LocalDate.of(2026, 3, 15), report.startDates.get(project));
+        Assert.assertEquals(LocalDate.of(2026, 3, 15), report.endDates.get(project));
+    }
+
+    // daty: wiele zadań → start = najwcześniejsza, koniec = najpóźniejsza
+    @Test
+    public void testDatesRange() {
+        Employee employee = new Employee("Kowalski Jan");
+        Project project = new Project("Projekt1");
+
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(new Task("Task1", LocalDate.of(2026, 1, 10), Duration.ofHours(2), employee, project));
+        tasks.add(new Task("Task2", LocalDate.of(2026, 1, 5),  Duration.ofHours(3), employee, project));
+        tasks.add(new Task("Task3", LocalDate.of(2026, 1, 20), Duration.ofHours(1), employee, project));
+
+        ProjectReport report = ProjectReport.generateReport(tasks);
+
+        Assert.assertEquals(LocalDate.of(2026, 1, 5),  report.startDates.get(project));
+        Assert.assertEquals(LocalDate.of(2026, 1, 20), report.endDates.get(project));
+    }
+
+    // daty: dwa projekty mają niezależne zakresy dat
+    @Test
+    public void testDatesTwoProjects() {
+        Employee employee = new Employee("Kowalski Jan");
+        Project projekt1 = new Project("Projekt1");
+        Project projekt2 = new Project("Projekt2");
+
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(new Task("Task1", LocalDate.of(2026, 1, 1),  Duration.ofHours(4), employee, projekt1));
+        tasks.add(new Task("Task2", LocalDate.of(2026, 1, 31), Duration.ofHours(2), employee, projekt1));
+        tasks.add(new Task("Task3", LocalDate.of(2026, 6, 15), Duration.ofHours(6), employee, projekt2));
+
+        ProjectReport report = ProjectReport.generateReport(tasks);
+
+        Assert.assertEquals(LocalDate.of(2026, 1, 1),  report.startDates.get(projekt1));
+        Assert.assertEquals(LocalDate.of(2026, 1, 31), report.endDates.get(projekt1));
+        Assert.assertEquals(LocalDate.of(2026, 6, 15), report.startDates.get(projekt2));
+        Assert.assertEquals(LocalDate.of(2026, 6, 15), report.endDates.get(projekt2));
+    }
 }
