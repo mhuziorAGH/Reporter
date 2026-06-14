@@ -25,6 +25,7 @@ public class TaskReportPrinter {
 
             System.out.printf("%2d. %-60s %-5s%n", position, taskName, hours + "h" );
             position++;
+            System.out.println();
         }
     }
 }

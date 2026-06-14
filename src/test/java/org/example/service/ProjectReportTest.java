@@ -3,13 +3,15 @@ package org.example.service;
 import org.example.domain.Employee;
 import org.example.domain.Project;
 import org.example.domain.Task;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ProjectReportTest {
 
@@ -25,8 +27,8 @@ public class ProjectReportTest {
 
         ProjectReport report = ProjectReport.generateReport(tasks);
 
-        Assert.assertTrue(report.projects.containsKey(project));
-        Assert.assertEquals(Duration.ofHours(8), report.projects.get(project));
+        assertTrue(report.projects.containsKey(project));
+        assertEquals(Duration.ofHours(8), report.projects.get(project));
     }
 
     // jeden projekt, wiele zadań
@@ -41,7 +43,7 @@ public class ProjectReportTest {
 
         ProjectReport report = ProjectReport.generateReport(tasks);
 
-        Assert.assertEquals(Duration.ofHours(10), report.projects.get(project));
+        assertEquals(Duration.ofHours(10), report.projects.get(project));
     }
 
     //  dwa projekty, osobne taski
@@ -57,8 +59,8 @@ public class ProjectReportTest {
 
         ProjectReport report = ProjectReport.generateReport(tasks);
 
-        Assert.assertEquals(Duration.ofHours(3), report.projects.get(projekt1));
-        Assert.assertEquals(Duration.ofHours(5), report.projects.get(projekt2));
+        assertEquals(Duration.ofHours(3), report.projects.get(projekt1));
+        assertEquals(Duration.ofHours(5), report.projects.get(projekt2));
     }
 
     // dwa projekty, wielu pracowników, wiele zadań
@@ -76,8 +78,8 @@ public class ProjectReportTest {
 
         ProjectReport report = ProjectReport.generateReport(tasks);
 
-        Assert.assertEquals(Duration.ofHours(6), report.projects.get(projekt1));
-        Assert.assertEquals(Duration.ofHours(6), report.projects.get(projekt2));
+        assertEquals(Duration.ofHours(6), report.projects.get(projekt1));
+        assertEquals(Duration.ofHours(6), report.projects.get(projekt2));
     }
 
     // pusta lista → pusty raport
@@ -87,7 +89,7 @@ public class ProjectReportTest {
 
         ProjectReport report = ProjectReport.generateReport(tasks);
 
-        Assert.assertTrue(report.projects.isEmpty());
+        assertTrue(report.projects.isEmpty());
     }
 
     // check- raport zawiera dokładnie tyle projektów ile w danych
@@ -103,7 +105,7 @@ public class ProjectReportTest {
 
         ProjectReport report = ProjectReport.generateReport(tasks);
 
-        Assert.assertEquals(2, report.projects.size());
+        assertEquals(2, report.projects.size());
     }
 
     // daty: jedno zadanie → start = koniec = ta sama data
@@ -117,8 +119,8 @@ public class ProjectReportTest {
 
         ProjectReport report = ProjectReport.generateReport(tasks);
 
-        Assert.assertEquals(LocalDate.of(2026, 3, 15), report.startDates.get(project));
-        Assert.assertEquals(LocalDate.of(2026, 3, 15), report.endDates.get(project));
+        assertEquals(LocalDate.of(2026, 3, 15), report.startDates.get(project));
+        assertEquals(LocalDate.of(2026, 3, 15), report.endDates.get(project));
     }
 
     // daty: wiele zadań → start = najwcześniejsza, koniec = najpóźniejsza
@@ -134,8 +136,8 @@ public class ProjectReportTest {
 
         ProjectReport report = ProjectReport.generateReport(tasks);
 
-        Assert.assertEquals(LocalDate.of(2026, 1, 5),  report.startDates.get(project));
-        Assert.assertEquals(LocalDate.of(2026, 1, 20), report.endDates.get(project));
+        assertEquals(LocalDate.of(2026, 1, 5),  report.startDates.get(project));
+        assertEquals(LocalDate.of(2026, 1, 20), report.endDates.get(project));
     }
 
     // daty: dwa projekty mają niezależne zakresy dat
@@ -152,9 +154,9 @@ public class ProjectReportTest {
 
         ProjectReport report = ProjectReport.generateReport(tasks);
 
-        Assert.assertEquals(LocalDate.of(2026, 1, 1),  report.startDates.get(projekt1));
-        Assert.assertEquals(LocalDate.of(2026, 1, 31), report.endDates.get(projekt1));
-        Assert.assertEquals(LocalDate.of(2026, 6, 15), report.startDates.get(projekt2));
-        Assert.assertEquals(LocalDate.of(2026, 6, 15), report.endDates.get(projekt2));
+        assertEquals(LocalDate.of(2026, 1, 1),  report.startDates.get(projekt1));
+        assertEquals(LocalDate.of(2026, 1, 31), report.endDates.get(projekt1));
+        assertEquals(LocalDate.of(2026, 6, 15), report.startDates.get(projekt2));
+        assertEquals(LocalDate.of(2026, 6, 15), report.endDates.get(projekt2));
     }
 }
