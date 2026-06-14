@@ -1,22 +1,28 @@
 package org.example;
 
 import org.example.cli.CLI;
+import org.example.data.FileScanner;
+import org.example.domain.Task;
+
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-        CLI cli = new CLI(args);
-        cli.run();
+        FileScanner fileScanner = new FileScanner();
+        List<Task> tasks = fileScanner.readExcelFile("/var/home/student/Documents/Reporter/Resources/reporter-dane/2012/02/Tomasz_W.xlsx");
+        System.out.println(tasks);
+        System.out.println(tasks.size());
+        System.out.println(tasks.get(0).getWorkingTime());
 
-//        testing with params
-        String [] mockArgs = new String[] {"--path", "Resources/reporter-dane/2012/01/Nowak_Piotr.xls", "--r", "R1"};
-        CLI cli2 = new CLI(mockArgs);
-        cli2.run();
-
-
-
-//        String [] mockArgs3 = new String[] {"--r", "R2;","--help", "--path", "/awda", "--r", "R3;", "--r", "R2;" };
-//        CLI cli3 = new CLI(mockArgs);
-//        cli3.run();
-
+        System.out.println(tasks);
+        System.out.println(tasks.size());
+        System.out.println(tasks.get(1).getWorkingTime());
+        System.out.println(tasks);
+        System.out.println(tasks.size());
+        System.out.println(tasks.get(2).getWorkingTime());
+        System.out.println(tasks);
+        System.out.println(tasks.size());
+        System.out.println(tasks.get(3).getWorkingTime());
+        System.out.println(tasks.get(3).getDescription());
     }
 }

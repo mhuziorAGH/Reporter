@@ -5,6 +5,7 @@ import org.example.domain.Project;
 import org.example.domain.Task;
 
 import org.apache.poi.ss.usermodel.*;
+import org.example.output.ErrorsReport;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -55,7 +56,7 @@ public class FileScanner {
                         Cell timeCell = row.getCell(2);
 
                         if (dataCell == null || taskCell == null || timeCell == null) {
-                            errors.add("No data provided in the file " + file.getName() + "in sheet" + sheet +
+                            throw new RuntimeException("No data provided in the file " + file.getName() + "in sheet" + sheet +
                                     "', in row: " + (rowIndex + 1));
                         }
 
@@ -74,7 +75,7 @@ public class FileScanner {
                         result.add(task);
                     } catch (Exception e) {
                         errors.add(
-                                "Błąd w pliku " + file.getName() + "w arkuszu" + sheet +
+                                file.getName() + "w arkuszu" + sheet +
                                         "', wiersz Excel: " + (rowIndex + 1) +
                                         " -> " + e.getMessage()
                         );
@@ -86,9 +87,13 @@ public class FileScanner {
         catch (IOException e) {
             throw new RuntimeException("Can not read Excel file", e);
         }
-        catch (Exception e) {
-            throw new RuntimeException("Can not read Excel file", e);
-        }
+        //catch (Exception e) {
+        //    throw new RuntimeException("Can not read Excel file", e);
+        //}
+
+        ErrorsReport errorsReport = new ErrorsReport();
+
+        errorsReport.saveToFile(errors);
 
         return result;
     }
@@ -133,15 +138,36 @@ public class FileScanner {
 
     private Duration convertDuration(Cell cell) {
 
-        if (cell.getCellType() != CellType.NUMERIC) {
+        double hours;
+
+        if (cell.getCellType() == CellType.NUMERIC) {
+            hours = cell.getNumericCellValue();
+
+        } else if (cell.getCellType() == CellType.STRING) {
+
+            String value = cell.getStringCellValue()
+                    .trim()
+                    .replace(",", ".");
+
+            try {
+                hours = Double.parseDouble(value);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Time must be a valid number");
+            }
+
+        } else {
             throw new IllegalArgumentException("Time must be a number");
         }
 
-        double hours = cell.getNumericCellValue();
+        if (Double.isNaN(hours) || Double.isInfinite(hours)) {
+            throw new IllegalArgumentException("Time must be a finite number");
+        }
 
-        return Duration.ofMinutes(
-                Math.round(hours * 60)
-        );
+        if (hours < 0) {
+            throw new IllegalArgumentException("Time cannot be negative");
+        }
+
+        return Duration.ofMinutes(Math.round(hours * 60));
     }
 
 }
