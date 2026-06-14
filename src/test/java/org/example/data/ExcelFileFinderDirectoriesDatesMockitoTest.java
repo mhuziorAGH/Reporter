@@ -25,7 +25,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ExcelFileFinderTestDirectoriesDates {
+class ExcelFileFinderDirectoriesDatesMockitoTest {
 
     @Mock
     private FileScanner fileScanner;

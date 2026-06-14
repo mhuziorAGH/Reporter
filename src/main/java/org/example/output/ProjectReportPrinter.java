@@ -30,6 +30,7 @@ public class ProjectReportPrinter {
 
             System.out.printf("%-20s %5dh (%.1f%%)  [%s → %s]%n",
                     name, hours, percent, start, end);
+            System.out.println();
         }
     }
 }

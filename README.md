@@ -34,9 +34,74 @@ The Reporter app uses an .xls file added to [FILE PATH] as an input data.
 # How to start
 
 1. Add your Excel sheet to the [FILE PATH]
-2. Run the application by writing down commands in the console
+2. Run the application by writing down commands in the console with sets of arguments
+
+Code structure:
+java -jar {filePath .jar} flag1 arg1 flag2 arg2@ flag1 flag2 ... 
+
+Example code:
+java -jar Reporter-1.0-SNAPSHOT.jar --from 2012-01-01 --r R1@ --path /var/home/student/IdeaProjects/Reporter/Resources/reporter-dane/2012/02/Kowalski_Jan.xls
+
 3. Read reports in the console
 4. Check the list of errors in your Excel file (if applicable) in the created Errors.txt file
+
+# Arguments pairs
+
+Arguments are paired. Arguments without pair or with wrong flag have no effect on starting program. 
+Structure of pair: 
+
+--flag arg 
+
+Pairs are combined with sets. Every set generates new report.
+Every set ends with "@" added to the last argument
+Example:
+
+--from 2012-01-01 --r R4@ --r R1@ --r R2@ 
+
+# Flags
+Implemented flags:
+1. --path
+Argument with this flag sets folders with files or file paths that are being reported
+
+2. --from
+Argument with this flag sets "from" date
+
+Argument format:
+
+yyyy-MM-dd
+
+3. --to
+Argument with this flag sets "to" date
+
+Argument format:
+
+yyyy-MM-dd
+
+4. --r
+Argument with this flag sets type of generated report
+
+5. --out (for future development of information display methods)
+
+# Default values
+If you don't use any flags Params will be set default:
+1. path = "Resources/reporter-dane"
+2. from = "2010-01-01"
+3. to = {OneYearFromProgramStart}
+4. r = R1
+5. out = "out1"
+
+# Options for --r flag:
+1. R1   for Employees
+
+
+2. R2   for Projects
+
+
+3. R3   
+
+
+4. R4   for Tasks
+
 
 
 # Report 1 - Employees
