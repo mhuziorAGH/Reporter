@@ -8,7 +8,7 @@ public class App {
 //        cli.run();
 
 //        testing with params
-        String [] mockArgs = new String[] {"--path", "Resources/reporter-dane", "--r", "R1", "--from", "2012-01-01", "--to", "2012-03-31"};
+        String [] mockArgs = new String[] {"--path", "Resources/reporter-dane", "--r", "R1", "--from", "2012-01-01", "--to", "2012-03-31;", "--path", "Resources/reporter-dane", "--r", "R1", "--from", "2012-01-01", "--to", "2012-03-31"};
         CLI cli2 = new CLI(mockArgs);
         cli2.run();
 
