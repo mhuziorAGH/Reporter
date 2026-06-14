@@ -11,13 +11,28 @@ public class EmployeeReportPrinter {
 
     public static void printReport(EmployeeReport employeeReport) {
 
+
         System.out.println("=== RAPORT 1 — Employee hours ===");
 
+        Employee topEmployee = null;
+        long maxMinutes = -1;
+        for (Map.Entry<Employee, Map<Project, Duration>> empEntry
+                : employeeReport.employeeProjectHours.entrySet()) {
+            long total = 0;
+            for (Duration duration : empEntry.getValue().values()) {
+                total += duration.toMinutes();
+            }
+            if (total > maxMinutes) {
+                maxMinutes = total;
+                topEmployee = empEntry.getKey();
+            }
+        }
 
         for (Map.Entry<Employee, Map<Project, Duration>> empEntry
                 : employeeReport.employeeProjectHours.entrySet()) {
 
-            String employeeName = empEntry.getKey().getName();
+            Employee employee = empEntry.getKey();
+            String employeeName = employee.getName();
             Map<Project, Duration> projects = empEntry.getValue();
 
             //  minuty + pracownik (suma wszystkich projektów)
@@ -27,7 +42,8 @@ public class EmployeeReportPrinter {
             }
 
             // nagłówek: pracownik + suma godzin
-            System.out.println(employeeName + " (" + (totalMinutes / 60) + "h):");
+            String marker = employee.equals(topEmployee) ? "  ⭐ Tytan pracy" : "";
+            System.out.println(employeeName + " (" + (totalMinutes / 60) + "h):" + marker);
 
             //  projekt z godzinami i procentem
             for (Map.Entry<Project, Duration> projEntry : projects.entrySet()) {
