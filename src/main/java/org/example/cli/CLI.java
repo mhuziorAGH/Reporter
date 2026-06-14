@@ -29,6 +29,11 @@ public class CLI {
             if (arg.startsWith("--") && !nextArg.startsWith("--")) {
                 String mode = arg.substring(2);
 
+                if (nextArg.endsWith("@")) {
+                    nextArg = nextArg.substring(0, nextArg.length() - 1) + ";";
+                }
+
+
                 String value = nextArg.endsWith(";")
                         ? nextArg.substring(0, nextArg.length() - 1)
                         : nextArg;
