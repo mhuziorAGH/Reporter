@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,9 +22,17 @@ public class ExcelFileFinder {
     private static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public List<Task> run(ParamsSet params) {
-        FileScanner fileScanner = new FileScanner();
+    private final FileScanner fileScanner;
 
+    public ExcelFileFinder() {
+        this(new FileScanner());
+    }
+
+    ExcelFileFinder(FileScanner fileScanner) {
+        this.fileScanner = Objects.requireNonNull(fileScanner);
+    }
+
+    public List<Task> run(ParamsSet params) {
         LocalDate dateFrom =
                 LocalDate.parse(params.getFrom(), FORMATTER);
 
@@ -49,11 +58,6 @@ public class ExcelFileFinder {
         List<Task> allTasks = new ArrayList<>();
 
         for (File file : files) {
-//            System.out.printf(
-//                    "  [READING] %s%n",
-//                    file.getAbsolutePath()
-//            );
-
             allTasks.addAll(
                     fileScanner.readExcelFile(file.getAbsolutePath())
             );
@@ -83,13 +87,6 @@ public class ExcelFileFinder {
                 );
             }
 
-            //debug
-
-//            System.out.printf(
-//                    "  [FOUND] %s%n",
-//                    path.toAbsolutePath()
-//            );
-
             return List.of(path.toFile());
         }
 
@@ -98,10 +95,6 @@ public class ExcelFileFinder {
                 return paths
                         .filter(Files::isRegularFile)
                         .filter(this::isExcelFile)
-//                        .peek(file -> System.out.printf(
-//                                "  [FOUND] %s%n",
-//                                file.toAbsolutePath()
-//                        ))
                         .map(Path::toFile)
                         .collect(Collectors.toList());
 
