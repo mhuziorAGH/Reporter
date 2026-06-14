@@ -13,26 +13,25 @@ import java.util.List;
 
 public class EmployeeReportTest {
 
+    //1 PRACOWNIK, dwa zadania w tym samym projekcie + suma
     @Test
     public void test1EmployeeeReportService() {
         Employee employee = new Employee("Kowalski Jan");
         Project project = new Project("Project1");
-        Task task1 = new Task("Task1", LocalDate.of(2026,02,01), Duration.ofHours(1),employee, project);
-        Task task2 = new Task("Task2", LocalDate.of(2026,02,01), Duration.ofHours(2),employee, project);
+        Task task1 = new Task("Task1", LocalDate.of(2026, 2, 1), Duration.ofHours(1), employee, project);
+        Task task2 = new Task("Task2", LocalDate.of(2026, 2, 1), Duration.ofHours(2), employee, project);
 
         List<Task> tasks = new ArrayList<>();
         tasks.add(task1);
         tasks.add(task2);
 
-
         EmployeeReport report = EmployeeReport.generateReport(tasks);
-        Assert.assertTrue(report.employees.containsKey(employee));
-        Assert.assertEquals(Duration.ofHours(3), report.employees.get(employee));
 
+        Assert.assertTrue(report.employeeProjectHours.containsKey(employee));
+        Assert.assertEquals(Duration.ofHours(3), report.employeeProjectHours.get(employee).get(project));
     }
 
-    // TEST 2 — dwóch pracowników
-    @Test
+    //2 pracownikow
     public void testTwoEmployees() {
         Employee kowalski = new Employee("Kowalski Jan");
         Employee nowak = new Employee("Nowak Piotr");
@@ -44,11 +43,11 @@ public class EmployeeReportTest {
 
         EmployeeReport report = EmployeeReport.generateReport(tasks);
 
-        Assert.assertEquals(Duration.ofHours(4), report.employees.get(kowalski));
-        Assert.assertEquals(Duration.ofHours(6), report.employees.get(nowak));
+        Assert.assertEquals(Duration.ofHours(4), report.employeeProjectHours.get(kowalski).get(project));
+        Assert.assertEquals(Duration.ofHours(6), report.employeeProjectHours.get(nowak).get(project));
     }
 
-    // TEST 3 — dwóch pracowników, wiele zadań każdy
+    //2pracowników, wiele zadań każdy
     @Test
     public void testTwoEmployeesMultipleTasks() {
         Employee kowalski = new Employee("Kowalski Jan");
@@ -63,21 +62,21 @@ public class EmployeeReportTest {
 
         EmployeeReport report = EmployeeReport.generateReport(tasks);
 
-        Assert.assertEquals(Duration.ofHours(5), report.employees.get(kowalski));
-        Assert.assertEquals(Duration.ofHours(6), report.employees.get(nowak));
+        Assert.assertEquals(Duration.ofHours(5), report.employeeProjectHours.get(kowalski).get(project));
+        Assert.assertEquals(Duration.ofHours(6), report.employeeProjectHours.get(nowak).get(project));
     }
 
-    // TEST 4 — pusta lista → pusty raport
+    // pusta lista → pusty raport
     @Test
     public void testEmptyList() {
         List<Task> tasks = new ArrayList<>();
 
         EmployeeReport report = EmployeeReport.generateReport(tasks);
 
-        Assert.assertTrue(report.employees.isEmpty());
+        Assert.assertTrue(report.employeeProjectHours.isEmpty());
     }
 
-    // TEST 5 — sprawdź że raport zawiera TYLKO pracowników z listy
+    //ddokladnie 1 proacwnik
     @Test
     public void testReportContainsExactlyTheRightEmployees() {
         Employee kowalski = new Employee("Kowalski Jan");
@@ -88,7 +87,6 @@ public class EmployeeReportTest {
 
         EmployeeReport report = EmployeeReport.generateReport(tasks);
 
-        Assert.assertEquals(1, report.employees.size());
+        Assert.assertEquals(1, report.employeeProjectHours.size());
     }
-
 }

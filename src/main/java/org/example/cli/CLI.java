@@ -1,67 +1,91 @@
 package org.example.cli;
 
+import org.example.output.EmployeeReportPrinter;
+import org.example.output.ProjectReportPrinter;
+import org.example.service.EmployeeReport;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class CLI {
-    private final String[] args;
     private List<ParamsSet> paramsSets = new ArrayList<>();
 
     public CLI(String[] args) {
-        this.args = args;
         this.paramsSets = getParamsSets(args);
     }
 
+    public void run() {
+        selectMethod();
+    }
+
     private List<ParamsSet> getParamsSets(String[] args) {
-        ArrayList<ParamsSet> paramsSets = new ArrayList<>();
+        List<ParamsSet> paramsSets = new ArrayList<>();
         ParamsSet actualPsSet = new ParamsSet();
 
-        for (int i = 0; i < args.length; i++) {
+        for (int i = 0; i < args.length - 1; i++) {
             String arg = args[i];
             String nextArg = args[i + 1];
+
             if (arg.startsWith("--") && !nextArg.startsWith("--")) {
-                String mode = arg.startsWith("--") ? arg.substring(2) : arg;
+                String mode = arg.substring(2);
+
+                String value = nextArg.endsWith(";")
+                        ? nextArg.substring(0, nextArg.length() - 1)
+                        : nextArg;
+
                 switch (mode) {
-                    case "--path" -> {actualPsSet.setPath(nextArg);}
-                    case "--from" -> {actualPsSet.setFrom(nextArg);}
-                    case "--to" -> {actualPsSet.setTo(nextArg);}
-                    case "--r" -> {actualPsSet.setWhichReport(nextArg);}
-                    case "--out" -> {actualPsSet.setWhichOutput(nextArg);}
-                    default ->  {}
+                    case "path" -> actualPsSet.setPath(value);
+                    case "from" -> actualPsSet.setFrom(value);
+                    case "to" -> actualPsSet.setTo(value);
+                    case "r" -> actualPsSet.setWhichReport(value);
+                    case "out" -> actualPsSet.setWhichOutput(value);
+                    default -> {
+                    }
+                }
+
+                if (nextArg.endsWith(";")) {
+                    paramsSets.add(actualPsSet);
+                    actualPsSet = new ParamsSet();
                 }
             }
-            if (arg.endsWith(";")) {
-                paramsSets.add(actualPsSet);
-                actualPsSet.clear();
-            }
+        }
+
+        if (args.length == 0) {
+            paramsSets.add(actualPsSet);
+        } else if (!args[args.length - 1].endsWith(";")
+                && !actualPsSet.getWhichReport().isEmpty()) {
+            paramsSets.add(actualPsSet);
         }
 
         return paramsSets;
     }
 
-    private void selectMethod(ParamsSet params) {
-        String method = params.getWhichReport();
 
+    private void selectMethod() {
         for (ParamsSet paramsSet : paramsSets) {
             switch (paramsSet.getWhichReport()) {
                 case "R1" -> {
-                    //TODO  (prams)
+                    ReportEmployeesCommand.execute(paramsSet);
                 }
                 case "R2" -> {
-                    //TODO  (prams)
+                    ReportProjectsCommand.execute(paramsSet);
                 }
                 case "R3" -> {
-                    //TODO  (prams)
+                    ReportEmployeeProjectsCommand.execute(paramsSet);
                 }
                 case "R4" -> {
-                    //TODO  (prams)
+                    ReportTaskRankingCommand.execute(paramsSet);
                 }
                 default -> {
-                    //TODO  (prams)
+                    ReportEmployeesCommand.execute(paramsSet);
                 }
             }
 
         }
 
+    }
+
+    public List<ParamsSet> getParamsSets() {
+        return paramsSets;
     }
 }
