@@ -1,10 +1,8 @@
 package org.example;
-
 import org.example.data.FileScanner;
 import org.example.domain.Task;
 import org.example.service.TaskReport;
 import org.junit.jupiter.api.Test;
-
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,7 +11,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RaportTaskIntTest {
