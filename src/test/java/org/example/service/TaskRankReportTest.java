@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TaskRankReportTest {
 
-    //1 zadanie i czastrwania trafia do mapy?
+    //1 zadanie i czy czastrwania trafia do mapy
     @Test
     public void testSingleTask() {
         Employee employee = new Employee("Kowalski Jan");
