@@ -3,13 +3,15 @@ package org.example.service;
 import org.example.domain.Employee;
 import org.example.domain.Project;
 import org.example.domain.Task;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TaskRankReportTest {
 
@@ -24,7 +26,7 @@ public class TaskRankReportTest {
 
         TaskReport report = TaskReport.generateReport(tasks);
 
-        Assert.assertEquals(Duration.ofHours(3), report.taskTimes.get("Pisanie kodu"));
+        assertEquals(Duration.ofHours(3), report.taskTimes.get("Pisanie kodu"));
     }
 
     // wielokrotnosc zadania + suma godzin
@@ -39,7 +41,7 @@ public class TaskRankReportTest {
 
         TaskReport report = TaskReport.generateReport(tasks);
 
-        Assert.assertEquals(Duration.ofHours(6), report.taskTimes.get("Testy"));
+        assertEquals(Duration.ofHours(6), report.taskTimes.get("Testy"));
     }
 
     // różne zadania - różne entries
@@ -54,9 +56,9 @@ public class TaskRankReportTest {
 
         TaskReport report = TaskReport.generateReport(tasks);
 
-        Assert.assertEquals(Duration.ofHours(5), report.taskTimes.get("Kodowanie"));
-        Assert.assertEquals(Duration.ofHours(1), report.taskTimes.get("Spotkania"));
-        Assert.assertEquals(2, report.taskTimes.size());
+        assertEquals(Duration.ofHours(5), report.taskTimes.get("Kodowanie"));
+        assertEquals(Duration.ofHours(1), report.taskTimes.get("Spotkania"));
+       assertEquals(2, report.taskTimes.size());
     }
 
     // pustalista  = pusta mapa check
@@ -66,6 +68,6 @@ public class TaskRankReportTest {
 
         TaskReport report = TaskReport.generateReport(tasks);
 
-        Assert.assertTrue(report.taskTimes.isEmpty());
+        assertTrue(report.taskTimes.isEmpty());
     }
 }

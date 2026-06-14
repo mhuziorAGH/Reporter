@@ -3,13 +3,16 @@ package org.example.service;
 import org.example.domain.Employee;
 import org.example.domain.Project;
 import org.example.domain.Task;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EmployeeReportTest {
 
@@ -27,8 +30,8 @@ public class EmployeeReportTest {
 
         EmployeeReport report = EmployeeReport.generateReport(tasks);
 
-        Assert.assertTrue(report.employeeProjectHours.containsKey(employee));
-        Assert.assertEquals(Duration.ofHours(3), report.employeeProjectHours.get(employee).get(project));
+        assertTrue(report.employeeProjectHours.containsKey(employee));
+        assertEquals(Duration.ofHours(3), report.employeeProjectHours.get(employee).get(project));
     }
 
     //2 pracownikow
@@ -43,8 +46,8 @@ public class EmployeeReportTest {
 
         EmployeeReport report = EmployeeReport.generateReport(tasks);
 
-        Assert.assertEquals(Duration.ofHours(4), report.employeeProjectHours.get(kowalski).get(project));
-        Assert.assertEquals(Duration.ofHours(6), report.employeeProjectHours.get(nowak).get(project));
+        assertEquals(Duration.ofHours(4), report.employeeProjectHours.get(kowalski).get(project));
+        assertEquals(Duration.ofHours(6), report.employeeProjectHours.get(nowak).get(project));
     }
 
     //2pracowników, wiele zadań każdy
@@ -55,15 +58,15 @@ public class EmployeeReportTest {
         Project project = new Project("Project1");
 
         List<Task> tasks = new ArrayList<>();
-        tasks.add(new Task("Task1", LocalDate.of(2026, 2, 1), Duration.ofHours(2), kowalski, project));
+        tasks.add(new Task("Task1", LocalDate.of(2026, 2, 1), Duration.ofHours(2).plus(Duration.ofMinutes(30)), kowalski, project));
         tasks.add(new Task("Task2", LocalDate.of(2026, 2, 2), Duration.ofHours(3), kowalski, project));
-        tasks.add(new Task("Task3", LocalDate.of(2026, 2, 1), Duration.ofHours(5), nowak, project));
+        tasks.add(new Task("Task3", LocalDate.of(2026, 2, 1), Duration.ofHours(5).plus(Duration.ofMinutes(30)), nowak, project));
         tasks.add(new Task("Task4", LocalDate.of(2026, 2, 3), Duration.ofHours(1), nowak, project));
 
         EmployeeReport report = EmployeeReport.generateReport(tasks);
 
-        Assert.assertEquals(Duration.ofHours(5), report.employeeProjectHours.get(kowalski).get(project));
-        Assert.assertEquals(Duration.ofHours(6), report.employeeProjectHours.get(nowak).get(project));
+        assertEquals(Duration.ofMinutes(330), report.employeeProjectHours.get(kowalski).get(project));
+        assertEquals(Duration.ofMinutes(390), report.employeeProjectHours.get(nowak).get(project));
     }
 
     // pusta lista → pusty raport
@@ -73,7 +76,7 @@ public class EmployeeReportTest {
 
         EmployeeReport report = EmployeeReport.generateReport(tasks);
 
-        Assert.assertTrue(report.employeeProjectHours.isEmpty());
+        assertTrue(report.employeeProjectHours.isEmpty());
     }
 
     //ddokladnie 1 proacwnik
@@ -87,6 +90,6 @@ public class EmployeeReportTest {
 
         EmployeeReport report = EmployeeReport.generateReport(tasks);
 
-        Assert.assertEquals(1, report.employeeProjectHours.size());
+        assertEquals(1, report.employeeProjectHours.size());
     }
 }
