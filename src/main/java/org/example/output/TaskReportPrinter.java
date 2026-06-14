@@ -23,7 +23,7 @@ public class TaskReportPrinter {
             long minutes = entry.getValue().toMinutes();
             long hours = minutes / 60;
 
-            System.out.printf("%d. %-20s %5dh%n", position, taskName, hours);
+            System.out.printf("%2d. %-60s %-5s%n", position, taskName, hours + "h" );
             position++;
         }
     }
