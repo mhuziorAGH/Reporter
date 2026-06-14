@@ -36,6 +36,8 @@ public class FileScanner {
 
         Employee employee = new Employee(str_employee);
 
+        System.out.println(file.getAbsolutePath());
+
         try (FileInputStream fileInputStream = new FileInputStream(file);
              Workbook workbook = WorkbookFactory.create(fileInputStream)) {
 
