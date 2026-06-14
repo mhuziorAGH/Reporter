@@ -24,8 +24,11 @@ public class ExcelFileFinder {
     public List<Task> run(ParamsSet params) {
         FileScanner fileScanner = new FileScanner();
 
-        LocalDate dateFrom = LocalDate.parse(params.getFrom(), FORMATTER);
-        LocalDate dateTo = LocalDate.parse(params.getTo(), FORMATTER);
+        LocalDate dateFrom =
+                LocalDate.parse(params.getFrom(), FORMATTER);
+
+        LocalDate dateTo =
+                LocalDate.parse(params.getTo(), FORMATTER);
 
         if (dateFrom.isAfter(dateTo)) {
             throw new IllegalArgumentException(
@@ -41,53 +44,79 @@ public class ExcelFileFinder {
                 params.getWhichReport()
         );
 
-        List<File> files = findExcelFilesRecursively(params.getPath());
+        List<File> files = findExcelFiles(params.getPath());
 
         List<Task> allTasks = new ArrayList<>();
 
         for (File file : files) {
-            System.out.printf(
-                    "  [READING] %s%n",
-                    file.getAbsolutePath()
+//            System.out.printf(
+//                    "  [READING] %s%n",
+//                    file.getAbsolutePath()
+//            );
+
+            allTasks.addAll(
+                    fileScanner.readExcelFile(file.getAbsolutePath())
             );
-
-            List<Task> tasksFromFile =
-                    fileScanner.readExcelFile(file.getAbsolutePath());
-
-            allTasks.addAll(tasksFromFile);
         }
 
         return allTasks.stream()
-                .filter(task -> isTaskInDateRange(task, dateFrom, dateTo))
+                .filter(task ->
+                        isTaskInDateRange(task, dateFrom, dateTo)
+                )
                 .collect(Collectors.toList());
     }
 
-    private List<File> findExcelFilesRecursively(String mainFolder) {
-        Path rootPath = Paths.get(mainFolder);
+    private List<File> findExcelFiles(String inputPath) {
+        Path path = Paths.get(inputPath);
 
-        if (!Files.isDirectory(rootPath)) {
+        if (!Files.exists(path)) {
             throw new IllegalArgumentException(
-                    "The specified path is not a directory: " + mainFolder
+                    "The specified path does not exist: " + inputPath
             );
         }
 
-        try (Stream<Path> paths = Files.walk(rootPath)) {
-            return paths
-                    .filter(Files::isRegularFile)
-                    .filter(this::isExcelFile)
-                    .peek(path -> System.out.printf(
-                            "  [FOUND] %s%n",
-                            path.toAbsolutePath()
-                    ))
-                    .map(Path::toFile)
-                    .collect(Collectors.toList());
+        if (Files.isRegularFile(path)) {
+            if (!isExcelFile(path)) {
+                throw new IllegalArgumentException(
+                        "The specified file is not an Excel file: "
+                                + inputPath
+                );
+            }
 
-        } catch (IOException exception) {
-            throw new IllegalStateException(
-                    "Failed to search directory: " + mainFolder,
-                    exception
-            );
+            //debug
+
+//            System.out.printf(
+//                    "  [FOUND] %s%n",
+//                    path.toAbsolutePath()
+//            );
+
+            return List.of(path.toFile());
         }
+
+        if (Files.isDirectory(path)) {
+            try (Stream<Path> paths = Files.walk(path)) {
+                return paths
+                        .filter(Files::isRegularFile)
+                        .filter(this::isExcelFile)
+//                        .peek(file -> System.out.printf(
+//                                "  [FOUND] %s%n",
+//                                file.toAbsolutePath()
+//                        ))
+                        .map(Path::toFile)
+                        .collect(Collectors.toList());
+
+            } catch (IOException exception) {
+                throw new IllegalStateException(
+                        "Failed to search directory: " + inputPath,
+                        exception
+                );
+            }
+        }
+
+        throw new IllegalArgumentException(
+                "The specified path is neither a file nor a directory: "
+                        + inputPath
+        );
     }
 
     private boolean isExcelFile(Path path) {
@@ -96,8 +125,10 @@ public class ExcelFileFinder {
                 .toLowerCase(Locale.ROOT);
 
         return !fileName.startsWith("~$")
-                && (fileName.endsWith(".xlsx")
-                || fileName.endsWith(".xls"));
+                && (
+                fileName.endsWith(".xlsx")
+                        || fileName.endsWith(".xls")
+        );
     }
 
     private boolean isTaskInDateRange(
