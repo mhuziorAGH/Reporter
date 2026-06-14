@@ -21,19 +21,19 @@ public class App {
 //        CLI cli = new CLI(args);
 //        cli.run();
 
-//       testing with params
-        String [] mockArgs = new String[] {"--path", "Resources/reporter-dane/2012/01/Kowalski_Jan.xls", "--r", "R1", "--from", "2012-01-01", "--to", "2012-03-31;",
-                "--path", "Resources/reporter-dane", "--r", "R1", "--from", "2012-01-01", "--to", "2012-03-31;",
-                "--path", "Resources/reporter-dane", "--r", "R1", "--from", "2012-01-01", "--to", "2012-01-15;",
-                "--path", "Resources/reporter-dane", "--r", "R4", "--from", "2012-01-01", "--to", "2012-03-31;"};
-        CLI cli2 = new CLI(mockArgs);
-        cli2.run();
+////       testing with params
+//        String [] mockArgs = new String[] {"--path", "Resources/reporter-dane/2012/01/Kowalski_Jan.xls", "--r", "R1", "--from", "2012-01-01", "--to", "2012-03-31;",
+//                "--path", "Resources/reporter-dane", "--r", "R1", "--from", "2012-01-01", "--to", "2012-03-31;",
+//                "--path", "Resources/reporter-dane", "--r", "R1", "--from", "2012-01-01", "--to", "2012-01-15;",
+//                "--path", "Resources/reporter-dane", "--r", "R4", "--from", "2012-01-01", "--to", "2012-03-31;"};
+//        CLI cli2 = new CLI(mockArgs);
+//        cli2.run();
 
 
 
-//        String [] mockArgs3 = new String[] {"--r", "R2;","--help", "--path", "/awda", "--r", "R3;", "--r", "R2;" };
-//        CLI cli3 = new CLI(mockArgs);
-//        cli3.run();
+        String [] mockArgs3 = new String[] {"--path /var/home/student/IdeaProjects/Reporter/Resources/reporter-dane/2012/01/Nowak_Piotr.xls" };
+        CLI cli3 = new CLI(mockArgs3);
+        cli3.run();
 
 
     }

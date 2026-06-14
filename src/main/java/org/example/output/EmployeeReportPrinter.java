@@ -59,8 +59,8 @@ public class EmployeeReportPrinter {
                         projDuration.toHours(),
                         projDuration.toMinutesPart(),
                         percent);
-                System.out.println();
             }
         }
+        System.out.println();
     }
 }
