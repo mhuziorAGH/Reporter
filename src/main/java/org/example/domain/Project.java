@@ -2,6 +2,7 @@ package org.example.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Project {
     private String projectName;
@@ -20,5 +21,18 @@ public class Project {
 
     public List<Employee> getEmployeeList() {
         return employee;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Project)) return false;
+        Project project = (Project) o;
+        return Objects.equals(projectName, project.projectName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectName);
     }
 }
