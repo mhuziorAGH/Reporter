@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.domain.Employee;
 import org.example.domain.Project;
 import org.example.domain.Task;
 
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ProjectReport {
+
 
     public Map<Project, Duration> projects = new HashMap<>();
 
