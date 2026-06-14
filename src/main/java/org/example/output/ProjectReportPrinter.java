@@ -1,3 +1,4 @@
+
 package org.example.output;
 
 import org.example.domain.Project;
@@ -8,13 +9,23 @@ import java.util.Map;
 
 public class ProjectReportPrinter {
 
-    public static void printReport(ProjectReport projectReport) {
-        System.out.println("=== RAPORT 2 — GODZINY NA PROJEKT ===");
+    public static void printReportProject(ProjectReport projectReport) {
+        System.out.println("=== RAPORT 2 — Projects ===");
 
+        // 1. policz łączny czas wszystkich projektów (mianownik do %)
+        long totalMinutes = 0;
+        for (Duration duration : projectReport.projects.values()) {
+            totalMinutes += duration.toMinutes();
+        }
+
+        // 2. wypisz każdy projekt z godzinami i % udziału
         for (Map.Entry<Project, Duration> entry : projectReport.projects.entrySet()) {
             String name = entry.getKey().getProjectName();
-            long hours = entry.getValue().toHours();
-            System.out.println(name + " : " + hours + "h");
+            long projectMinutes = entry.getValue().toMinutes();
+            long hours = projectMinutes / 60;
+            double percent = (projectMinutes * 100.0) / totalMinutes;
+
+            System.out.printf("%-20s %5dh (%.1f%%)%n", name, hours, percent);
         }
     }
 }
