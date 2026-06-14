@@ -2,6 +2,7 @@ package org.example.data;
 
 import org.example.cli.CLI;
 import org.example.cli.ParamsSet;
+import org.example.domain.Task;
 
 import java.io.File;
 import java.time.YearMonth;
@@ -11,11 +12,12 @@ import java.util.List;
 
 public class ExcelFileFinder {
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM");
+    List<Task> tasks = new ArrayList<>();
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public void run(List<ParamsSet> paramsSets) {
+    public List<Task> run(ParamsSet params) {
         FileScanner fileScanner = new FileScanner();
-        for (ParamsSet params : paramsSets) {
+
             System.out.printf("Przetwarzam: %s | %s → %s | Raport: %s%n",
                     params.getPath(),
                     params.getFrom(),
@@ -30,9 +32,10 @@ public class ExcelFileFinder {
             );
 
             for (File file : files) {
-                fileScanner.readExcelFile(file.getAbsolutePath());
+                tasks.addAll(fileScanner.readExcelFile(file.getAbsolutePath()));
             }
-        }
+
+            return tasks;
     }
 
     private List<File> findExelFile(String mainFolder, YearMonth dataFrom, YearMonth dataTo) {
